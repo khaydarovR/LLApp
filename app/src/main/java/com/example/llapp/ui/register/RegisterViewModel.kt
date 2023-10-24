@@ -1,18 +1,14 @@
-package com.example.llapp.ui.login
+package com.example.llapp.ui.register
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import java.util.prefs.Preferences
 
-class LoginViewModel(application: Application) : AndroidViewModel(application) {
+class RegisterViewModel(application: Application) : AndroidViewModel(application) {
 	private val context = getApplication<Application>().applicationContext
 	private val _text = MutableLiveData<String>().apply {
 		value = "This is login Fragment"
@@ -34,17 +30,8 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 	val password = ObservableField<String>()
 
 	fun onButtonClicked() {
-		Log.i("login VM safe new ", email.get()+ " " + password.get())
-		jwtval = "new jwt before auth" + email.get()
+		Log.i("login VM", email.get()+ " " + password.get())
+		jwtval = "new jwt before auth"
 		saveToSharedPreferences(jwtval)
-	}
-
-	private val _eventOpenRegister = MutableLiveData<Boolean>()
-	val eventOpenRegister: MutableLiveData<Boolean> get() = _eventOpenRegister
-	fun onRegisterOpen() {
-		_eventOpenRegister.value = true
-	}
-	fun onRegisterNavigated() {
-		_eventOpenRegister.value = false
 	}
 }

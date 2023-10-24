@@ -1,4 +1,4 @@
-package com.example.llapp.ui.home
+package com.example.llapp.ui.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.llapp.databinding.FragmentHomeBinding
 import com.example.llapp.databinding.FragmentLoginBinding
+import com.example.llapp.databinding.FragmentRegBinding
 import com.example.llapp.ui.login.LoginViewModel
 
-class HomeFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
-	private var _binding: FragmentHomeBinding? = null
+	private var _binding: FragmentRegBinding? = null
 
 	// This property is only valid between onCreateView and
 	// onDestroyView.
@@ -23,14 +23,14 @@ class HomeFragment : Fragment() {
 		container: ViewGroup?,
 		savedInstanceState: Bundle?
 	): View {
-		val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+		val regViewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
 
-		_binding = FragmentHomeBinding.inflate(inflater, container, false)
+		_binding = FragmentRegBinding.inflate(inflater, container, false)
 
 		val root: View = binding.root
 
 		// Set the ViewModel to your binding
-		binding.vm = homeViewModel
+		binding.vm = regViewModel
 		binding.lifecycleOwner = this
 
 		return root

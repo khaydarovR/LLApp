@@ -9,7 +9,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.llapp.R
 import com.example.llapp.databinding.FragmentHomeBinding
 import com.example.llapp.databinding.FragmentLoginBinding
 import com.example.llapp.ui.login.LoginViewModel
@@ -36,6 +40,13 @@ class LoginFragment : Fragment() {
 		// Set the ViewModel to your binding
 		binding.vm = loginViewModel
 		binding.lifecycleOwner = this
+
+		loginViewModel.eventOpenRegister.observe(viewLifecycleOwner, { shouldNavigate ->
+			if (shouldNavigate) {
+				findNavController().navigate(R.id.action_navigation_login_to_navigation_reg)
+				loginViewModel.onRegisterNavigated()
+			}
+		})
 
 		return root
 	}
