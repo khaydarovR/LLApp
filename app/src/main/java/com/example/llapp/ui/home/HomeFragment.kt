@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.llapp.databinding.FragmentHomeBinding
 import com.example.llapp.databinding.FragmentLoginBinding
 import com.example.llapp.ui.login.LoginViewModel
+import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
@@ -29,11 +32,21 @@ class HomeFragment : Fragment() {
 
 		val root: View = binding.root
 
+
 		// Set the ViewModel to your binding
 		binding.vm = homeViewModel
 		binding.lifecycleOwner = this
 
 		return root
+	}
+
+	@BindingAdapter("android:onDateChanged")
+	fun setDatePickerListener(datePicker: DatePicker, viewModel: HomeViewModel) {
+		val calendar = Calendar.getInstance()
+
+		datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)) { view, year, monthOfYear, dayOfMonth ->
+			viewModel.setDate(year, monthOfYear + 1, dayOfMonth)
+		}
 	}
 
 	override fun onDestroyView() {

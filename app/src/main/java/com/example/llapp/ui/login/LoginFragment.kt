@@ -1,22 +1,15 @@
 package com.example.llapp.ui.login
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.llapp.R
-import com.example.llapp.databinding.FragmentHomeBinding
 import com.example.llapp.databinding.FragmentLoginBinding
-import com.example.llapp.ui.login.LoginViewModel
+
 
 class LoginFragment : Fragment() {
 
@@ -29,7 +22,7 @@ class LoginFragment : Fragment() {
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
-		savedInstanceState: Bundle?
+		savedInstanceState: Bundle?,
 	): View {
 		val loginViewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -50,6 +43,7 @@ class LoginFragment : Fragment() {
 
 		return root
 	}
+
 
 	override fun onDestroyView() {
 		super.onDestroyView()
