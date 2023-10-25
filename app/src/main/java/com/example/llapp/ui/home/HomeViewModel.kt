@@ -36,6 +36,6 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 		this.year.set(year)
 		this.month.set(month)
 		this.day.set(dayOfMonth)
-		Log.i("HOME", "day " + day)
+		Log.i("HOME", "day " + day.get())
 	}
 }
