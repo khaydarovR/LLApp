@@ -1,4 +1,4 @@
-package com.example.llapp.ui.login
+package com.example.llapp.ui.acc
 
 import android.app.Application
 import android.content.Context
@@ -12,10 +12,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.util.prefs.Preferences
 
-class LoginViewModel(application: Application) : AndroidViewModel(application) {
+class AccViewModel(application: Application) : AndroidViewModel(application) {
 	private val context = getApplication<Application>().applicationContext
 	private val _text = MutableLiveData<String>().apply {
-		value = "This is login Fragment"
+		value = "This is acc Fragment"
 	}
 	val text: LiveData<String> = _text
 
@@ -30,15 +30,9 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 		editor.apply()
 	}
 
-	val email = ObservableField<String>()
-	val password = ObservableField<String>()
-
-	fun onButtonClicked() {
-		val role = email.get()
-		if (role != null) {
-			saveToSharedPreferences("jwt", role)
-			saveToSharedPreferences("isAuth", "true")
-		}
+	fun Logout() {
+		saveToSharedPreferences("isAuth", "false")
+		saveToSharedPreferences("jwt", "")
 	}
 
 	private val _eventOpenRegister = MutableLiveData<Boolean>()

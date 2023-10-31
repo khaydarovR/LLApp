@@ -1,5 +1,6 @@
 package com.example.llapp
 
+import android.content.Context
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,11 +20,9 @@ class MainActivity : AppCompatActivity() {
 		binding = ActivityMainBinding.inflate(layoutInflater)
 		setContentView(binding.root)
 
-		val navView: BottomNavigationView = binding.navView
-
+		val bottomNav: BottomNavigationView = binding.navView
 		val navController = findNavController(R.id.nav_host_fragment_activity_main)
-		// Passing each menu ID as a set of Ids because each
-		// menu should be considered as top level destinations.
+
 		val appBarConfiguration = AppBarConfiguration(
 			setOf(
 				R.id.navigation_reg,
@@ -33,7 +32,56 @@ class MainActivity : AppCompatActivity() {
 				R.id.navigation_notifications
 			)
 		)
+
 		setupActionBarWithNavController(navController, appBarConfiguration)
-		navView.setupWithNavController(navController)
+		bottomNav.setupWithNavController(navController)
+
+		bottomNav.setOnItemSelectedListener { item ->
+			when (item.itemId) {
+				R.id.navigation_login -> {
+					val isAuth = getState()
+					if (isAuth == "true") {
+						navController.navigate(R.id.navigation_acc)
+					} else {
+						navController.navigate(R.id.navigation_login)
+					}
+					true
+				}
+
+				R.id.navigation_home -> {
+					navController.navigate(R.id.navigation_home)
+					false
+				}
+
+				R.id.navigation_dashboard -> {
+					val role = getRole()
+					if (role == "master") {
+						navController.navigate(R.id.navigation_masboard)
+					} else {
+						navController.navigate(R.id.navigation_dashboard)
+					}
+					true
+				}
+
+				R.id.navigation_notifications -> {
+					navController.navigate(R.id.navigation_notifications)
+					false
+				}
+
+				else -> false
+			}
+		}
+	}
+
+	private fun getState(): String {
+		val sharedPref = this.applicationContext.getSharedPreferences("pref", Context.MODE_PRIVATE)
+		val role = sharedPref.getString("isAuth", "false")?:""
+		return role
+	}
+
+	private fun getRole(): String {
+		val sharedPref = this.applicationContext.getSharedPreferences("pref", Context.MODE_PRIVATE)
+		val role = sharedPref.getString("jwt", "")?:""
+		return role
 	}
 }

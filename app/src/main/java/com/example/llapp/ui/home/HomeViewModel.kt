@@ -27,7 +27,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 	}
 
 	fun getFromSharedPreferences(key: String): String? {
-		val sharedPref = context.getSharedPreferences("MySharedPref", Context.MODE_PRIVATE)
+		val sharedPref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
 		return sharedPref.getString(key, null)
 	}
 

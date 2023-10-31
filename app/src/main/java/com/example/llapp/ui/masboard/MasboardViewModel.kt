@@ -1,4 +1,4 @@
-package com.example.llapp.ui.dashboard
+package com.example.llapp.ui.masboard
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -9,7 +9,7 @@ import com.example.llapp.Models.UserApp
 import com.example.llapp.Remote.AppApi
 import kotlinx.coroutines.launch
 
-class DashboardViewModel(application: Application) : AndroidViewModel(application) {
+class MasboardViewModel(application: Application) : AndroidViewModel(application) {
 	private val context = getApplication<Application>().applicationContext
 
 	private val client = AppApi.create()

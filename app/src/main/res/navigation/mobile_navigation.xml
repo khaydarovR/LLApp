@@ -26,6 +26,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_acc"
+        android:name="com.example.llapp.ui.acc.AccFragment"
+        android:label="@string/title_login"
+        tools:layout="@layout/fragment_acc" />
+
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.llapp.ui.home.HomeFragment"
         android:label="@string/title_home"
@@ -36,6 +42,12 @@
         android:name="com.example.llapp.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_masboard"
+        android:label="@string/title_dashboard"
+        android:name="com.example.llapp.ui.masboard.MasboardFragment"
+        tools:layout="@layout/fragment_masterboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"

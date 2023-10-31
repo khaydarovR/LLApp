@@ -1,6 +1,7 @@
 package com.example.llapp.Helpers
 
 object Const {
-	val baseUrl: String = "https://jsonplaceholder.typicode.com"
-	val posts: String = "$baseUrl/posts"
+	val JWT_KEY_NAME = "jwt"
+	val BASE_URL: String = "https://jsonplaceholder.typicode.com"
+	val POSTS: String = "$BASE_URL/POSTS"
 }

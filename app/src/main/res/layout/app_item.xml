@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"> <!-- Define your rounded, yellow background drawable -->
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="344dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_bg"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/button_app"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:text="Взять" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="324dp"
+            android:layout_height="64dp">
+
+            <TextView
+                android:id="@+id/problem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Text1"
+                android:textColor="@color/black1"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_bg"
+                android:gravity="end"
+                android:padding="2dp"
+                android:text="В работе"
+                android:textColor="@color/white1"
+                android:textSize="16sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/marka"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Text3"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/numer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Text4"
+                android:textSize="24sp" />
+
+            <Space
+                android:layout_width="87dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/user_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Text2"
+                android:textSize="24sp" />
+
+        </TableRow>
+
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
