@@ -19,7 +19,7 @@ class AccViewModel(application: Application) : AndroidViewModel(application) {
 	}
 	val text: LiveData<String> = _text
 
-	// your desired key
+	
 	private var jwtval = "null jwt"
 
 	// function to save to shared preferences
@@ -35,12 +35,4 @@ class AccViewModel(application: Application) : AndroidViewModel(application) {
 		saveToSharedPreferences("jwt", "")
 	}
 
-	private val _eventOpenRegister = MutableLiveData<Boolean>()
-	val eventOpenRegister: MutableLiveData<Boolean> get() = _eventOpenRegister
-	fun onRegisterOpen() {
-		_eventOpenRegister.value = true
-	}
-	fun onRegisterNavigated() {
-		_eventOpenRegister.value = false
-	}
 }

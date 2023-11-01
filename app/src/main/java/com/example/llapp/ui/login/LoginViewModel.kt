@@ -2,18 +2,18 @@ package com.example.llapp.ui.login
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import java.util.prefs.Preferences
+import com.example.llapp.Remote.AppApi
+import com.example.llapp.Remote.DTOS.AuthenticationResponse
+import kotlinx.coroutines.runBlocking
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 	private val context = getApplication<Application>().applicationContext
+	private val client = AppApi.create()
 	private val _text = MutableLiveData<String>().apply {
 		value = "This is login Fragment"
 	}
@@ -33,10 +33,16 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 	val email = ObservableField<String>()
 	val password = ObservableField<String>()
 
-	fun onButtonClicked() {
-		val role = email.get()
-		if (role != null) {
-			saveToSharedPreferences("jwt", role)
+	fun onLogin() {
+		val e = email.get().toString()
+		val p = password.get().toString()
+		var res: AuthenticationResponse? = null
+		runBlocking {
+			res = client.login(e, p)
+		}
+		Log.i("login", "on login")
+		if (res != null) {
+			saveToSharedPreferences("jwt", res?.token.toString())
 			saveToSharedPreferences("isAuth", "true")
 		}
 	}

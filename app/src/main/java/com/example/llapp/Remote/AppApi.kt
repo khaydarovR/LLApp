@@ -2,14 +2,20 @@ package com.example.llapp.Remote
 
 import android.util.Log
 import com.example.llapp.Helpers.Const
+import com.example.llapp.Remote.DTOS.AuthenticationResponse
+import com.example.llapp.Remote.DTOS.LoginDto
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.DefaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import io.ktor.client.request.post
 import io.ktor.client.request.url
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
 
 class AppApi (
 	private val client: HttpClient,
@@ -45,6 +51,21 @@ class AppApi (
 		}
 	}
 
+	suspend fun login(email: String, pw: String): AuthenticationResponse? {
+		try {
+			val loginDto = LoginDto(email, pw)
+			val response = client.post<AuthenticationResponse>(Const.BASE_URL+"/api/accounts/login") {
+				contentType(ContentType.Application.Json)
+				body = loginDto
+			}
+			Log.i("HTTP", "Login successful " + response.token)
+			return response
+		} catch (e: Exception) {
+			Log.i("HTTP", e.message.toString())
+		}
+		return null
+	}
+
 	suspend fun getApps(): ArrayList<GetAppDto> {
 		var response: ArrayList<GetAppDto>
 		if (isFake){
@@ -54,7 +75,7 @@ class AppApi (
 
 		try {
 			response = client.get<ArrayList<GetAppDto>>{
-				url(Const.POSTS)
+				url("api/applications")
 			}
 			Log.i("HTTP", response.first().problem)
 		}catch (e: Exception){
