@@ -1,7 +1,10 @@
 package com.example.llapp.Remote
 
+import android.text.BoringLayout
 import android.util.Log
 import com.example.llapp.Helpers.Const
+import com.example.llapp.Remote.DTOS.ApplicationDto
+import com.example.llapp.Remote.DTOS.ApplicationResponse
 import com.example.llapp.Remote.DTOS.AuthenticationResponse
 import com.example.llapp.Remote.DTOS.LoginDto
 import io.ktor.client.HttpClient
@@ -9,6 +12,7 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.features.DefaultRequest
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
+import io.ktor.client.request.DefaultHttpRequest
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -40,8 +44,7 @@ class AppApi (
 			return AppApi(
 				client = HttpClient(Android){
 					install(DefaultRequest){
-						url(Const.BASE_URL);
-						header("Authorize", jwt)
+						header("Authorization", "Bearer " + jwt)
 					}
 					install(JsonFeature){
 						serializer = KotlinxSerializer()
@@ -51,10 +54,21 @@ class AppApi (
 		}
 	}
 
+	suspend fun getUserApplications(): ArrayList<ApplicationResponse>? {
+		try {
+			val response = client.get<ArrayList<ApplicationResponse>>(Const.BASE_URL+ "api/user/applications")
+			Log.i("HTTP", "Get USER applications successful " + response.first().createdAt)
+			return response
+		} catch (e: Exception) {
+			Log.i("HTTP", e.message.toString())
+		}
+		return null
+	}
+
 	suspend fun login(email: String, pw: String): AuthenticationResponse? {
 		try {
 			val loginDto = LoginDto(email, pw)
-			val response = client.post<AuthenticationResponse>(Const.BASE_URL+"/api/accounts/login") {
+			val response = client.post<AuthenticationResponse>(Const.BASE_URL+"api/accounts/login") {
 				contentType(ContentType.Application.Json)
 				body = loginDto
 			}
@@ -66,22 +80,17 @@ class AppApi (
 		return null
 	}
 
-	suspend fun getApps(): ArrayList<GetAppDto> {
-		var response: ArrayList<GetAppDto>
-		if (isFake){
-			response = arrayListOf(GetAppDto(34, 12, "fake problem", "fake dateToArrive"))
-			return response
-		}
-
+	suspend fun createApplication(createApplicationDto: ApplicationDto): Boolean {
 		try {
-			response = client.get<ArrayList<GetAppDto>>{
-				url("api/applications")
+			val response = client.post<ApplicationResponse>(Const.BASE_URL+"api/user/applications") {
+				contentType(ContentType.Application.Json)
+				body = createApplicationDto
 			}
-			Log.i("HTTP", response.first().problem)
-		}catch (e: Exception){
-			response = ArrayList<GetAppDto>()
+			Log.i("HTTP", "Create app successful " + response.createdAt)
+			return true
+		} catch (e: Exception) {
 			Log.i("HTTP", e.message.toString())
 		}
-		return response
+		return false
 	}
 }

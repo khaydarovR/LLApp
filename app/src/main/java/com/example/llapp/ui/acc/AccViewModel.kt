@@ -2,37 +2,42 @@ package com.example.llapp.ui.acc
 
 import android.app.Application
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import androidx.databinding.ObservableField
-import androidx.datastore.core.DataStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import java.util.prefs.Preferences
+import com.example.llapp.Helpers.StorageHelper
 
 class AccViewModel(application: Application) : AndroidViewModel(application) {
 	private val context = getApplication<Application>().applicationContext
-	private val _text = MutableLiveData<String>().apply {
-		value = "This is acc Fragment"
+	private val storage = StorageHelper(context)
+
+	val email = ObservableField<String>()
+	val username = ObservableField<String>()
+	val role = ObservableField<String>()
+
+	init {
+		email.set(storage.getFromSharedPreferences("email"))
+		var rolestring = storage.getFromSharedPreferences("role")
+		if (rolestring == "Master"){
+			role.set("Работяга")
+		}
+		else{
+			role.set(rolestring)
+		}
+
+		username.set(storage.getFromSharedPreferences("name"))
 	}
-	val text: LiveData<String> = _text
 
-	
-	private var jwtval = "null jwt"
-
-	// function to save to shared preferences
-	fun saveToSharedPreferences(key: String, value: String) {
-		val sharedPref = context.getSharedPreferences("pref", Context.MODE_PRIVATE)
-		val editor = sharedPref.edit()
-		editor.putString(key, value)
-		editor.apply()
+	private val _eventLogout = MutableLiveData<Boolean>()
+	val eventOnLogout: MutableLiveData<Boolean> get() = _eventLogout
+	fun onLogout() {
+		storage.saveToSharedPreferences("isAuth", "false")
+		storage.saveToSharedPreferences("jwt", "")
+		_eventLogout.value = true
 	}
-
-	fun Logout() {
-		saveToSharedPreferences("isAuth", "false")
-		saveToSharedPreferences("jwt", "")
+	fun onLogouted() {
+		_eventLogout.value = false
 	}
 
 }

@@ -48,7 +48,7 @@ class DashboardFragment : Fragment() {
 		binding.recycleView.adapter = adapter
 
 		dashboardViewModel.userApplications.observe(viewLifecycleOwner) { userApplications ->
-			adapter.setApps(userApplications)
+			adapter.setApps(userApplications.toMutableList())
 		}
 
 		return root

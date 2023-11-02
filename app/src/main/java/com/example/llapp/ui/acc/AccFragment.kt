@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.llapp.R
 import com.example.llapp.databinding.FragmentAccBinding
-import com.example.llapp.databinding.FragmentLoginBinding
 
 
 class AccFragment : Fragment() {
@@ -34,6 +33,13 @@ class AccFragment : Fragment() {
 		// Set the ViewModel to your binding
 		binding.vm = accViewModel
 		binding.lifecycleOwner = this
+
+		accViewModel.eventOnLogout.observe(viewLifecycleOwner, { shouldNavigate ->
+			if (shouldNavigate) {
+				findNavController().navigate(R.id.action_navigation_acc_to_navigation_login)
+				accViewModel.onLogouted()
+			}
+		})
 
 		return root
 	}

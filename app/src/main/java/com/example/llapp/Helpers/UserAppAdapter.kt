@@ -7,10 +7,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.llapp.Models.UserApp
 import com.example.llapp.R
+import com.example.llapp.Remote.DTOS.ApplicationResponse
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 
-class UserAppAdapter(private var newList: List<UserApp> = listOf(
-	UserApp(123, "Пусто", "Пусто","Пусто","Пусто")
-) as List<UserApp>)
+class UserAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 	: RecyclerView.Adapter<UserAppAdapter.MyHolder>(){
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
@@ -20,7 +25,7 @@ class UserAppAdapter(private var newList: List<UserApp> = listOf(
 		return MyHolder(itemView)
 	}
 
-	fun setApps(userApps: List<UserApp>) {
+	fun setApps(userApps: List<ApplicationResponse>) {
 		this.newList = userApps
 		notifyDataSetChanged()
 	}
@@ -30,11 +35,11 @@ class UserAppAdapter(private var newList: List<UserApp> = listOf(
 
 	override fun onBindViewHolder(holder: MyHolder, position: Int) {
 		val currentItem = newList[position]
-		holder.num.text = currentItem.number.toString()
-		holder.problem.text = currentItem.problem.toString()
-		holder.marka.text = currentItem.marka.toString()
-		holder.date.text = currentItem.date.toString()
-		holder.stat.text = currentItem.status.toString()
+		holder.num.text = currentItem.carNumber.toString()
+		holder.problem.text = currentItem.problemDescription.toString()
+		holder.marka.text = currentItem.carBrand.toString()
+		holder.date.text = convertDateFormat(currentItem.createdAt.toString())
+		holder.stat.text = currentItem.currentStatus.toString()
 	}
 
 	class MyHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -43,5 +48,19 @@ class UserAppAdapter(private var newList: List<UserApp> = listOf(
 		var marka: TextView = itemView.findViewById(R.id.marka)
 		var date: TextView = itemView.findViewById(R.id.user_date)
 		var stat: TextView = itemView.findViewById(R.id.status)
+	}
+
+	fun convertDateFormat(inputDate: String): String {
+		val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
+		val outputFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
+
+		try {
+			val date = inputFormat.parse(inputDate)
+			return outputFormat.format(date)
+		} catch (e: ParseException) {
+			// Handle parsing error, such as logging or returning a default value
+			e.printStackTrace()
+			return "Invalid Date"
+		}
 	}
 }

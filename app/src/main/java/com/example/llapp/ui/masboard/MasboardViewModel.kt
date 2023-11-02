@@ -26,22 +26,6 @@ class MasboardViewModel(application: Application) : AndroidViewModel(application
 	}
 
 	private suspend fun loadFromServ(): ArrayList<UserApp>? {
-		try {
-			val response = client.getApps()
-			val res = response.map {
-				UserApp(
-					number = it.status,
-					marka = "BMW",
-					problem = it.problem,
-					date = "01-23-23", 
-					status = "Ожидает"
-				)
-			}
-
-			return ArrayList(res)
-		} catch (e: Exception) {
-			// Handle exceptions or return null
-			return null
-		}
+		return arrayListOf()
 	}
 }

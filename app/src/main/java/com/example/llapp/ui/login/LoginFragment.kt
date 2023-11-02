@@ -41,6 +41,13 @@ class LoginFragment : Fragment() {
 			}
 		})
 
+		loginViewModel.eventOnRedirect.observe(viewLifecycleOwner, { shouldNavigate ->
+			if (shouldNavigate) {
+				findNavController().navigate(R.id.action_navigation_login_to_navigation_home)
+				loginViewModel.onRedirectedToHome()
+			}
+		})
+
 		return root
 	}
 

@@ -23,13 +23,23 @@
         <action
             android:id="@+id/action_navigation_login_to_navigation_reg"
             app:destination="@id/navigation_reg" />
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_acc"
+            app:destination="@id/navigation_acc" />
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_acc"
         android:name="com.example.llapp.ui.acc.AccFragment"
         android:label="@string/title_login"
-        tools:layout="@layout/fragment_acc" />
+        tools:layout="@layout/fragment_acc" >
+        <action
+            android:id="@+id/action_navigation_acc_to_navigation_login"
+            app:destination="@id/navigation_login" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_home"
@@ -54,4 +64,5 @@
         android:name="com.example.llapp.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
 </navigation>

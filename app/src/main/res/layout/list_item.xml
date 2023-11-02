@@ -60,14 +60,14 @@
                 android:text="Text4"
                 android:textSize="24sp" />
 
-            <Space
-                android:layout_width="87dp"
-                android:layout_height="match_parent" />
-
             <TextView
                 android:id="@+id/user_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="5dp"
+                android:foregroundGravity="right"
+                android:gravity="right"
                 android:text="Text2"
                 android:textSize="24sp" />
 
