@@ -66,9 +66,17 @@
                 android:textColor="@color/black1"
                 android:textSize="24sp" />
 
+            <TextView
+                android:id="@+id/token"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text='@{"Токен доступа к серверу: " + vm.token}'
+                android:textColor="@color/black1"
+                android:textSize="8sp" />
+
             <Space
                 android:layout_width="354dp"
-                android:layout_height="113dp" />
+                android:layout_height="81dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
