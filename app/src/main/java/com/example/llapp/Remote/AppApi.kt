@@ -7,6 +7,7 @@ import com.example.llapp.Remote.DTOS.ApplicationDto
 import com.example.llapp.Remote.DTOS.ApplicationResponse
 import com.example.llapp.Remote.DTOS.AuthenticationResponse
 import com.example.llapp.Remote.DTOS.LoginDto
+import com.example.llapp.Remote.DTOS.RegisterDto
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.features.DefaultRequest
@@ -95,6 +96,21 @@ class AppApi (
 			val response = client.post<AuthenticationResponse>(Const.BASE_URL+"api/accounts/login") {
 				contentType(ContentType.Application.Json)
 				body = loginDto
+			}
+			Log.i("HTTP", "Login successful " + response.token)
+			return response
+		} catch (e: Exception) {
+			Log.i("HTTP", e.message.toString())
+		}
+		return null
+	}
+
+	suspend fun register(email: String, pw: String, username: String): AuthenticationResponse? {
+		try {
+			val registerDto = RegisterDto(username, email, pw)
+			val response = client.post<AuthenticationResponse>(Const.BASE_URL+"api/accounts/register") {
+				contentType(ContentType.Application.Json)
+				body = registerDto
 			}
 			Log.i("HTTP", "Login successful " + response.token)
 			return response
