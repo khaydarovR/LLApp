@@ -19,16 +19,65 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycle_view_master"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:flow_horizontalAlign="start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="1dp" />
+            android:gravity="bottom"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:onClick='@{() -> vm.OnSelectStatus("Waiting")}'
+                    android:text="Ожидают"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+
+                    android:gravity="bottom"
+                    android:onClick='@{() -> vm.OnSelectStatus("InWork")}'
+                    android:text="В работе"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:onClick='@{() -> vm.OnSelectStatus("Ready")}'
+                    android:text="Закрыты"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycle_view_master"
+                android:layout_width="409dp"
+                android:layout_height="607dp"
+                android:layout_gravity="clip_horizontal"
+                app:flow_horizontalAlign="start" />
+
+        </LinearLayout>
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

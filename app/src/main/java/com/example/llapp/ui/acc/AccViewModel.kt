@@ -16,6 +16,7 @@ class AccViewModel(application: Application) : AndroidViewModel(application) {
 	val username = ObservableField<String>()
 	val role = ObservableField<String>()
 	val token = ObservableField<String>()
+	val id = ObservableField<String>()
 
 	init {
 		email.set(storage.getFromSharedPreferences("email"))
@@ -29,6 +30,7 @@ class AccViewModel(application: Application) : AndroidViewModel(application) {
 
 		username.set(storage.getFromSharedPreferences("name"))
 		token.set(storage.getFromSharedPreferences("jwt"))
+		id.set(storage.getFromSharedPreferences("id"))
 	}
 
 	private val _eventLogout = MutableLiveData<Boolean>()

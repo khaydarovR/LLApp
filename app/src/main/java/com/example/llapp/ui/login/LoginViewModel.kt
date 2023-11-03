@@ -39,6 +39,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
 			storage.saveToSharedPreferences("role", res?.role.toString())
 			storage.saveToSharedPreferences("email", res?.email.toString())
 			storage.saveToSharedPreferences("name", res?.userName.toString())
+			storage.saveToSharedPreferences("id", "3fa85f64-5717-4562-b3fc-2c963f66afa6")
 			Toast.makeText(context, "Успешно", Toast.LENGTH_SHORT).show()
 			onRedirectToHome()
 		}

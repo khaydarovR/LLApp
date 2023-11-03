@@ -38,7 +38,7 @@ class UserAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 		holder.num.text = currentItem.carNumber.toString()
 		holder.problem.text = currentItem.problemDescription.toString()
 		holder.marka.text = currentItem.carBrand.toString()
-		holder.date.text = convertDateFormat(currentItem.createdAt.toString())
+		holder.date.text = convertDateFormat(currentItem.timeOfArrival.toString())
 		holder.stat.text = currentItem.currentStatus.toString()
 	}
 
@@ -52,7 +52,7 @@ class UserAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 
 	fun convertDateFormat(inputDate: String): String {
 		val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-		val outputFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
+		val outputFormat = SimpleDateFormat("dd.MM.yy")
 
 		try {
 			val date = inputFormat.parse(inputDate)
@@ -60,7 +60,7 @@ class UserAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 		} catch (e: ParseException) {
 			// Handle parsing error, such as logging or returning a default value
 			e.printStackTrace()
-			return "Invalid Date"
+			return "Date"
 		}
 	}
 }

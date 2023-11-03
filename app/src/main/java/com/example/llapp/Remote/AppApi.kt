@@ -65,6 +65,30 @@ class AppApi (
 		return null
 	}
 
+	suspend fun getMasterApplications(status: String): ArrayList<ApplicationResponse>? {
+		try {
+			val response = client.get<ArrayList<ApplicationResponse>>(Const.BASE_URL+ "api/master/applications/$status")
+			Log.i("HTTP", "Get MASTER applications successful " + response.count())
+			return response
+		} catch (e: Exception) {
+			Log.i("HTTP", e.message.toString())
+		}
+		return null
+	}
+
+	suspend fun getForWork(applicationId: String, action: String): ApplicationResponse? {
+		try {
+			val response = client.post<ApplicationResponse>(Const.BASE_URL+"api/master/applications/$action/$applicationId" ) {
+				contentType(ContentType.Application.Json)
+			}
+			Log.i("HTTP", "Take application successful " + response.masterId)
+			return response
+		} catch (e: Exception) {
+			Log.i("HTTP", e.message.toString())
+		}
+		return null
+	}
+
 	suspend fun login(email: String, pw: String): AuthenticationResponse? {
 		try {
 			val loginDto = LoginDto(email, pw)

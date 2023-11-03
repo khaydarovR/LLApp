@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
 				R.id.navigation_dashboard -> {
 					val role = getRole()
-					if (role == "master") {
+					if (role == "Master") {
 						navController.navigate(R.id.navigation_masboard)
 					} else {
 						navController.navigate(R.id.navigation_dashboard)
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
 	private fun getRole(): String {
 		val sharedPref = this.applicationContext.getSharedPreferences("pref", Context.MODE_PRIVATE)
-		val role = sharedPref.getString("jwt", "")?:""
+		val role = sharedPref.getString("role", "")?:""
 		return role
 	}
 }

@@ -70,9 +70,9 @@
                 android:id="@+id/token"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:text='@{"Токен доступа к серверу: " + vm.token}'
+                android:text='@{"ID: " + vm.id}'
                 android:textColor="@color/black1"
-                android:textSize="8sp" />
+                android:textSize="14sp" />
 
             <Space
                 android:layout_width="354dp"

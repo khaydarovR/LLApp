@@ -1,6 +1,7 @@
 package com.example.llapp.ui.masboard
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.llapp.Helpers.MasAppAdapter
+import com.example.llapp.Helpers.OnItemClickListener
 import com.example.llapp.Helpers.UserAppAdapter
 import com.example.llapp.Models.UserApp
 import com.example.llapp.databinding.FragmentDashboardBinding
@@ -49,9 +51,16 @@ class MasboardFragment : Fragment() {
 		val adapter = MasAppAdapter()
 		binding.recycleViewMaster.adapter = adapter
 
-		masboardViewModel.userApplications.observe(viewLifecycleOwner) { userApplications ->
+		masboardViewModel.masApplications.observe(viewLifecycleOwner) { userApplications ->
 			adapter.setApps(userApplications)
 		}
+
+		adapter.setOnItemClickListener(object : OnItemClickListener {
+			override fun onButtonClick(position: Int) {
+				masboardViewModel.onButtonClick(position)
+			}
+		})
+
 
 		return root
 	}
