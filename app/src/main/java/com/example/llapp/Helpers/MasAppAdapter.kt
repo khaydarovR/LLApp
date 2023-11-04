@@ -45,10 +45,12 @@ class MasAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 		holder.master.text = getMasterString(currentItem)
 		var resultStr = buildString {
 			append(convertDateFormat(currentItem.timeOfAcceptance.toString(), "dd.MM HH:mm"))
-			append(" ➜ ")
+			append(" ")
 			append(convertDateFormat(currentItem.closedAt.toString(), "dd.MM HH:mm"))
 		}
 		holder.startEndTime.text = resultStr
+		holder.buttonget.isVisible = true
+
 		if (currentItem.currentStatus == "Waiting"){
 			holder.buttonget.text = "Взять"
 		}

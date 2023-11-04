@@ -16,7 +16,7 @@ import kotlinx.coroutines.runBlocking
 
 class MasboardViewModel(application: Application) : AndroidViewModel(application) {
 	private val context = getApplication<Application>().applicationContext
-	private lateinit var client: AppApi
+	private var client: AppApi
 	private var action: String = "accept"
 	private val storage = StorageHelper(context)
 
@@ -53,10 +53,10 @@ class MasboardViewModel(application: Application) : AndroidViewModel(application
 	fun OnSelectStatus(status: String){
 		Log.i("BTN", status)
 		if (status  == Const.InWork){
-			this.action = "close"
+			action = "close"
 		}
 		else if (status == Const.Waiting){
-			this.action = "accept"
+			action = "accept"
 		}
 		_masterApplications.value = runBlocking { loadFromServ(status) }
 	}

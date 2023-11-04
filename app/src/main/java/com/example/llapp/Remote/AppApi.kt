@@ -1,5 +1,6 @@
 package com.example.llapp.Remote
 
+import android.net.Uri
 import android.text.BoringLayout
 import android.util.Log
 import com.example.llapp.Helpers.Const
@@ -19,8 +20,12 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.request.post
+import io.ktor.client.request.request
 import io.ktor.client.request.url
+import io.ktor.client.statement.HttpResponse
 import io.ktor.http.ContentType
+import io.ktor.http.HttpMethod
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import org.json.JSONObject
 
@@ -60,7 +65,8 @@ class AppApi (
 	suspend fun getUserApplications(): ArrayList<ApplicationResponse>? {
 		try {
 			val response = client.get<ArrayList<ApplicationResponse>>(Const.BASE_URL+ "api/user/applications")
-			Log.i("HTTP", "Get USER applications successful " + response.first().createdAt)
+			Log.i("HTTP", "Get USER applications successful " + response.count())
+			response.sortByDescending { it.createdAt }
 			return response
 		} catch (e: Exception) {
 			Log.i("HTTP", e.message.toString())
@@ -72,6 +78,7 @@ class AppApi (
 		try {
 			val response = client.get<ArrayList<ApplicationResponse>>(Const.BASE_URL+ "api/master/applications/$status")
 			Log.i("HTTP", "Get MASTER applications successful " + response.count())
+			response.sortByDescending { it.createdAt }
 			return response
 		} catch (e: Exception) {
 			Log.i("HTTP", e.message.toString())
@@ -79,15 +86,18 @@ class AppApi (
 		return null
 	}
 
-	suspend fun getForWork(applicationId: String, action: String): ApplicationResponse? {
-		try {
-			val response = client.post<ApplicationResponse>(Const.BASE_URL+"api/master/applications/$action/$applicationId" ) {
-				contentType(ContentType.Application.Json)
-			}
-			Log.i("HTTP", "Take application successful " + response.masterId)
-			return response
-		} catch (e: Exception) {
-			Log.i("HTTP", e.message.toString())
+	suspend fun getForWork(applicationId: String, action: String): Boolean? {
+		val url = Uri.parse(Const.BASE_URL + "api/master/applications/$action/$applicationId")
+		val response: HttpResponse = client.request(url.toString()) {
+			method = HttpMethod.Post
+		}
+
+		if (response.status == HttpStatusCode.OK) {
+			Log.i("HTTP", "Get app for work application successful")
+			return true
+		} else {
+			Log.i("HTTP", response.status.value.toString())
+			return false
 		}
 		return null
 	}
@@ -128,15 +138,20 @@ class AppApi (
 
 	suspend fun createApplication(createApplicationDto: ApplicationDto): Boolean {
 		try {
-			val response = client.post<ApplicationResponse>(Const.BASE_URL+"api/user/applications") {
-				contentType(ContentType.Application.Json)
+			val url = Const.BASE_URL+"api/user/applications"
+			val response: HttpResponse = client.request(url.toString()) {
+				method = HttpMethod.Post
 				body = createApplicationDto
+				contentType(ContentType.Application.Json)
 			}
-			Log.i("HTTP", "Create app successful " + response.createdAt)
-			return true
+			if (response.status == HttpStatusCode.OK){
+				return true
+			}
+			return false
 		} catch (e: Exception) {
 			Log.i("HTTP", e.message.toString())
 		}
 		return false
 	}
 }
+

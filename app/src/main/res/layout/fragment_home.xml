@@ -81,7 +81,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={vm.number}" />
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:text="@={vm.number}"
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,7 +104,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={vm.marka}" />
+                    android:text="@={vm.marka}"
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -121,14 +125,23 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@={vm.probleb}" />
+                    android:text="@={vm.probleb}"
+                    android:textSize="14sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Дата планируемого приезда"
+                android:textSize="16sp" />
 
             <DatePicker
                 android:id="@+id/date_picker"
                 android:layout_width="wrap_content"
-                android:layout_height="384dp"
+                android:layout_height="386dp"
                 android:layout_gravity="center"
                 android:setDate="@{vm}" />
             />
