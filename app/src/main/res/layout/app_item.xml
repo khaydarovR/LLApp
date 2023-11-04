@@ -93,8 +93,10 @@
                 android:id="@+id/master"
                 android:layout_width="112dp"
                 android:layout_height="wrap_content"
-                android:gravity="start"
+                android:background="@drawable/badge_bg"
+                android:gravity="center"
                 android:text="Text3"
+                android:textColor="@color/white1"
                 android:textSize="24sp" />
 
             <TextView

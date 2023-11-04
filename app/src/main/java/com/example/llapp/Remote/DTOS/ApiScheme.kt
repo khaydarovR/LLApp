@@ -20,6 +20,8 @@ data class ApplicationResponse(
 	val closedAt: String? = null,
 	val userId: String,
 	val masterId: String? = null,
+	val userName: String? = null,
+	val masterName: String? = null,
 	val problemDescription: String? = null,
 	val currentStatus: String? = null
 )

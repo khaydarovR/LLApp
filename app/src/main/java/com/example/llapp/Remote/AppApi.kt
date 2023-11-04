@@ -3,6 +3,7 @@ package com.example.llapp.Remote
 import android.text.BoringLayout
 import android.util.Log
 import com.example.llapp.Helpers.Const
+import com.example.llapp.Models.ApiResponse
 import com.example.llapp.Remote.DTOS.ApplicationDto
 import com.example.llapp.Remote.DTOS.ApplicationResponse
 import com.example.llapp.Remote.DTOS.AuthenticationResponse
@@ -21,6 +22,7 @@ import io.ktor.client.request.post
 import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import org.json.JSONObject
 
 class AppApi (
 	private val client: HttpClient,
@@ -105,7 +107,7 @@ class AppApi (
 		return null
 	}
 
-	suspend fun register(email: String, pw: String, username: String): AuthenticationResponse? {
+	suspend fun register(email: String, pw: String, username: String): ApiResponse<AuthenticationResponse>? {
 		try {
 			val registerDto = RegisterDto(username, email, pw)
 			val response = client.post<AuthenticationResponse>(Const.BASE_URL+"api/accounts/register") {
@@ -113,11 +115,15 @@ class AppApi (
 				body = registerDto
 			}
 			Log.i("HTTP", "Login successful " + response.token)
-			return response
+			return ApiResponse(true, response, null)
 		} catch (e: Exception) {
 			Log.i("HTTP", e.message.toString())
+			return ApiResponse(false, null, parseErrorMessage(e.message.toString()))
 		}
-		return null
+	}
+	fun parseErrorMessage(response: String): String {
+		val errorText = response.substring(response.indexOf("error") + 5).trim()
+		return errorText
 	}
 
 	suspend fun createApplication(createApplicationDto: ApplicationDto): Boolean {

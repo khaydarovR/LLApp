@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.llapp.R
 import com.example.llapp.Remote.DTOS.ApplicationResponse
@@ -40,7 +41,7 @@ class MasAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 		holder.problem.text = currentItem.problemDescription.toString()
 		holder.marka.text = currentItem.carBrand.toString() + ":" + currentItem.carNumber
 		holder.arriveDate.text = "Приезд: " + convertDateFormat(currentItem.timeOfArrival.toString(), "dd.MM")
-		holder.stat.text = currentItem.currentStatus.toString()
+		holder.stat.text = currentItem.userName
 		holder.master.text = getMasterString(currentItem)
 		var resultStr = buildString {
 			append(convertDateFormat(currentItem.timeOfAcceptance.toString(), "dd.MM HH:mm"))
@@ -55,7 +56,7 @@ class MasAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 			holder.buttonget.text = "Закрыть"
 		}
 		else {
-			holder.buttonget.text = "Закрыто"
+			holder.buttonget.isVisible = false
 		}
 
 
@@ -68,9 +69,9 @@ class MasAppAdapter(private var newList: List<ApplicationResponse> = listOf())
 
 	private fun getMasterString(currentItem: ApplicationResponse): String {
 		if (currentItem.masterId.isNullOrEmpty() == false){
-			return currentItem.masterId!!.take(5).toString()
+			return currentItem.masterName.toString()
 		}
-		return "master"
+		return "Ожидание"
 	}
 
 	class MyHolderForMas(itemView: View): RecyclerView.ViewHolder(itemView){

@@ -36,8 +36,8 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 			formattedDate,
 			probleb.get().toString(),
 		)
-		if (dto.carNumber?.length!! > 3){
-			Toast.makeText(context , "Только цифры!" , Toast.LENGTH_SHORT).show()
+		if (dto.carNumber?.length!! <= 3){
+			Toast.makeText(context , "В номере пишите только 3 цифры" , Toast.LENGTH_SHORT).show()
 			return
 		}
 		var response: Boolean

@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.example.llapp.R
 import com.example.llapp.databinding.FragmentLoginBinding
 import com.example.llapp.databinding.FragmentRegBinding
 import com.example.llapp.ui.login.LoginViewModel
@@ -32,6 +34,14 @@ class RegisterFragment : Fragment() {
 		// Set the ViewModel to your binding
 		binding.vm = regViewModel
 		binding.lifecycleOwner = this
+
+		regViewModel.eventOnRedirect.observe(viewLifecycleOwner, { shouldNavigate ->
+			if (shouldNavigate) {
+				findNavController().navigate(R.id.action_navigation_reg_to_navigation_home)
+				regViewModel.onRedirectedToHome()
+			}
+		})
+
 
 		return root
 	}
